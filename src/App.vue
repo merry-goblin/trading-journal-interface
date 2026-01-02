@@ -1,10 +1,10 @@
 
 <script setup>
-import TradeList from './components/TradeList.vue'
+
 </script>
 
 <template>
-  <TradeList />
+  <router-view />
 </template>
 
 <style scoped></style>
