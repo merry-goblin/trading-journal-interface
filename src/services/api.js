@@ -7,8 +7,7 @@ const api = axios.create({
 
 api.interceptors.request.use(config => {
     const token = localStorage.getItem('jwt')
-console.log('token to insert into request header')
-console.log(token)
+
     if (token) {
         config.headers.Authorization = `Bearer ${token}`
     }

@@ -1,8 +1,8 @@
 <script setup>
-import AssetRow from "./AssetRow.vue";
+import ScreenshotRow from "./ScreenshotRow.vue";
 
 defineProps({
-  assets: Array
+  screenshots: Array
 })
 
 const emit = defineEmits(['doStuff'])
@@ -11,10 +11,10 @@ const emit = defineEmits(['doStuff'])
 <template>
   <table>
     <tbody>
-    <AssetRow
-        v-for="asset in assets"
-        :key="asset.id"
-        :asset="asset"
+    <ScreenshotRow
+        v-for="screenshot in screenshots"
+        :key="screenshot.id"
+        :screenshot="screenshot"
         @doStuff="emit('doStuff', $event)"
     />
     </tbody>

@@ -1,13 +1,23 @@
 <script setup>
+import TradeRow from './TradeRow.vue'
+
 defineProps({
   trades: Array
 })
+
+const emit = defineEmits(['edit', 'delete'])
 </script>
 
 <template>
-  <ul>
-    <li v-for="trade in trades" :key="trade.id">
-      {{ trade.symbol }} – {{ trade.pnl }} €
-    </li>
-  </ul>
+  <table>
+    <tbody>
+    <TradeRow
+        v-for="trade in trades"
+        :key="trade.id"
+        :trade="trade"
+        @edit="emit('edit', $event)"
+        @delete="emit('delete', $event)"
+    />
+    </tbody>
+  </table>
 </template>

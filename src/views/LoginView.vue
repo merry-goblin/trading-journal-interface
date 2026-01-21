@@ -11,13 +11,12 @@ const router = useRouter()
 var loading = false;
 
 const login = async () => {
+  error.value = ''
+
   try {
     loading = true;
     const response = await loginRequest(email.value, password.value)
     localStorage.setItem('jwt', response.data.token)
-console.log('token to save for future calls')
-console.log(response.data.token)
-console.log(response.data)
     router.push('/assets')
   } catch {
     loading = false;
