@@ -39,6 +39,11 @@ function handleLogout() {
           <span class="nav-icon">📈</span>Statistiques
         </router-link>
       </li>
+      <li>
+        <router-link to="/tags">
+          <span class="nav-icon">🏷️</span>Tags
+        </router-link>
+      </li>
     </ul>
 
     <div class="sidebar-footer">

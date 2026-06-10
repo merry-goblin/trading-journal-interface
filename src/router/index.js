@@ -5,15 +5,17 @@ import JournalView        from '@/views/JournalView.vue'
 import PositionDetailView from '@/views/PositionDetailView.vue'
 import ObservationsView   from '@/views/ObservationsView.vue'
 import StatsView          from '@/views/StatsView.vue'
+import TagsView           from '@/views/TagsView.vue'
 
 const routes = [
-    { path: '/login',         component: LoginView,          meta: { public: true } },
-    { path: '/',              redirect: '/dashboard' },
-    { path: '/dashboard',     component: DashboardView },
-    { path: '/journal',       component: JournalView },
-    { path: '/journal/:id',   component: PositionDetailView },
-    { path: '/observations',  component: ObservationsView },
-    { path: '/stats',         component: StatsView },
+    { path: '/login',        component: LoginView,          meta: { public: true } },
+    { path: '/',             redirect: '/dashboard' },
+    { path: '/dashboard',    component: DashboardView },
+    { path: '/journal',      component: JournalView },
+    { path: '/journal/:id',  component: PositionDetailView },
+    { path: '/observations', component: ObservationsView },
+    { path: '/stats',        component: StatsView },
+    { path: '/tags',         component: TagsView },
 ]
 
 const router = createRouter({ history: createWebHistory(), routes })

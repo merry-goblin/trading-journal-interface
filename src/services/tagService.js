@@ -5,3 +5,6 @@ export const getTags = () =>
 
 export const createTag = (data) =>
     api.post('/tag', data)
+
+export const deleteTag = (id) =>
+    api.delete(`/tag/${id}`)
