@@ -1,0 +1,61 @@
+PATCH pour PositionDetailView.vue :
+
+1. Importer le composable en haut du <script setup> :
+   import { useScreenshotUrl } from '@/composables/useScreenshotUrl'
+   const { blobUrls, loadings, errors, getUrl } = useScreenshotUrl()
+
+2. Après le chargement de la position (dans onMounted), ajouter :
+   // Précharger les screenshots de toutes les observations
+   for (const obs of posRes.data.observations ?? []) {
+       for (const sc of obs.screenshots ?? []) {
+           getUrl(sc.id)
+       }
+   }
+
+3. Dans le template, remplacer le bloc timeline-content par :
+
+<div class="timeline-content">
+  <div class="timeline-meta">
+    {{ obs.observedAt }}
+    <span v-if="obs.trend" class="badge" :class="'badge-' + obs.trend" style="margin-left:6px">
+      {{ obs.trend.toUpperCase() }}
+    </span>
+    <span v-else class="badge badge-neutral" style="margin-left:6px">AUTO</span>
+  </div>
+  <div v-if="obs.comment" class="timeline-comment">{{ obs.comment }}</div>
+
+  <!-- Screenshots -->
+  <div v-if="obs.screenshots?.length" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px">
+    <div v-for="sc in obs.screenshots" :key="sc.id"
+         style="position:relative;width:160px;height:90px;background:var(--border);border-radius:4px;overflow:hidden">
+      <img
+        v-if="blobUrls[sc.id]"
+        :src="blobUrls[sc.id]"
+        :alt="sc.description || 'Screenshot'"
+        style="width:100%;height:100%;object-fit:cover;cursor:zoom-in"
+        @click="fullscreen = blobUrls[sc.id]"
+      />
+      <div v-else-if="loadings[sc.id]"
+           style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--text-muted);font-size:11px">
+        Chargement…
+      </div>
+      <div v-else-if="errors[sc.id]"
+           style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--danger);font-size:11px">
+        Indisponible
+      </div>
+    </div>
+  </div>
+</div>
+
+4. Ajouter la visionneuse plein écran.
+   Dans <script setup>, ajouter : const fullscreen = ref(null)
+   En bas du template (avant </template>) :
+
+<Teleport to="body">
+  <div v-if="fullscreen"
+       style="position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:9999;
+              display:flex;align-items:center;justify-content:center;cursor:zoom-out"
+       @click="fullscreen = null">
+    <img :src="fullscreen" style="max-width:95vw;max-height:95vh;border-radius:8px" />
+  </div>
+</Teleport>

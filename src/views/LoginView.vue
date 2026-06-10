@@ -1,65 +1,49 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { login as loginRequest } from '@/services/authService'
+import { useAuthStore } from '@/stores/auth'
 
-const email = ref('')
-const password = ref('')
-const error = ref(null)
+const auth   = useAuthStore()
 const router = useRouter()
 
-var loading = false;
+const email    = ref('')
+const password = ref('')
+const error    = ref('')
+const loading  = ref(false)
 
-const login = async () => {
-  error.value = ''
-
-  try {
-    loading = true;
-    const response = await loginRequest(email.value, password.value)
-    localStorage.setItem('jwt', response.data.token)
-    router.push('/assets')
-  } catch {
-    loading = false;
-    error.value = 'Identifiants invalides'
-  }
+async function handleLogin() {
+    error.value   = ''
+    loading.value = true
+    try {
+        await auth.login(email.value, password.value)
+        router.push('/dashboard')
+    } catch {
+        error.value = 'Email ou mot de passe incorrect.'
+    } finally {
+        loading.value = false
+    }
 }
 </script>
 
-
 <template>
-  <div class="login-container">
-    <h1>Connexion</h1>
+  <div class="login-box">
+    <div class="login-title">📈 Trading Journal</div>
+    <div class="login-sub">Connexion à votre espace</div>
 
-    <form @submit.prevent="login">
-      <input
-          type="email"
-          v-model="email"
-          placeholder="Email"
-          required
-      />
-
-      <input
-          type="password"
-          v-model="password"
-          placeholder="Mot de passe"
-          required
-      />
-
-      <button type="submit" :disabled="loading">
-        {{ loading ? 'Connexion...' : 'Se connecter' }}
+    <form class="login-form" @submit.prevent="handleLogin">
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input v-model="email" type="email" class="form-control" placeholder="you@example.com" required />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Mot de passe</label>
+        <input v-model="password" type="password" class="form-control" placeholder="••••••••" required />
+      </div>
+      <div v-if="error" class="error-msg">{{ error }}</div>
+      <button type="submit" class="btn btn-primary" :disabled="loading" style="width:100%">
+        <span v-if="loading">Connexion…</span>
+        <span v-else>Se connecter</span>
       </button>
-
-      <p v-if="error" class="error">{{ error }}</p>
     </form>
   </div>
 </template>
-
-<style scoped>
-.login-container {
-  max-width: 400px;
-  margin: 3rem auto;
-}
-.error {
-  color: red;
-}
-</style>
