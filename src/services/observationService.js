@@ -5,3 +5,6 @@ export const getObservations = (filters = {}, page = 1, limit = 20) =>
 
 export const getObservation = (id) =>
     api.get(`/observation/${id}`)
+
+export const createObservation = (data) =>
+    api.post('/observation', data)
