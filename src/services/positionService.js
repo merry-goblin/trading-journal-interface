@@ -8,3 +8,6 @@ export const getPosition = (id) =>
 
 export const enrichPosition = (id, data) =>
     api.patch(`/position/${id}`, data)
+
+export const deletePosition = (id) =>
+    api.delete(`/position/${id}`)
