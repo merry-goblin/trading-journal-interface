@@ -20,6 +20,7 @@ function handleLogout() {
 
     <ul class="nav-links">
       <li><router-link to="/dashboard"><span class="nav-icon">📊</span>Dashboard</router-link></li>
+      <li><router-link to="/session"><span class="nav-icon">📅</span>Session</router-link></li>
       <li><router-link to="/journal"><span class="nav-icon">📋</span>Journal</router-link></li>
       <li><router-link to="/observations"><span class="nav-icon">🔭</span>Observations</router-link></li>
       <li><router-link to="/stats"><span class="nav-icon">📈</span>Statistiques</router-link></li>

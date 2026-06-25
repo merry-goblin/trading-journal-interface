@@ -7,6 +7,7 @@ import ObservationsView   from '@/views/ObservationsView.vue'
 import StatsView          from '@/views/StatsView.vue'
 import TagsView           from '@/views/TagsView.vue'
 import ImportView         from '@/views/ImportView.vue'
+import SessionView        from '@/views/SessionView.vue'
 
 const routes = [
     { path: '/login',        component: LoginView,          meta: { public: true } },
@@ -18,6 +19,7 @@ const routes = [
     { path: '/stats',        component: StatsView },
     { path: '/tags',         component: TagsView },
     { path: '/import',       component: ImportView },
+    { path: '/session',      component: SessionView },
 ]
 
 const router = createRouter({ history: createWebHistory(), routes })
